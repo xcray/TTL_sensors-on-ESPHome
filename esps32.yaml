@@ -1,0 +1,61 @@
+esphome:
+  name: esps32
+  platform: esp32
+  board: esp32doit-devkit-v1
+  includes:
+    - ttlsensors.h
+
+wifi:
+  ssid: "xxxxx"
+  password: "xxxxxx"
+
+# Enable logging
+logger:
+  baud_rate: 0
+# Enable Home Assistant API
+api:
+  password: "xxxxxx"
+ota:
+  password: "xxxxxx"
+uart:
+  id: uart_bus
+  rx_pin: 3
+  baud_rate: 115200
+sensor:
+  - platform: wifi_signal
+    name: "WiFi node32s"
+    update_interval: 360s
+  - platform: custom
+    lambda: |-
+      auto ttlsensors = new TTLSensor(id(uart_bus));
+      App.register_component(ttlsensors);
+      return {ttlsensors->door_status, ttlsensors->lock_event, ttlsensors->levt_keyid, ttlsensors->levt_time, ttlsensors->door_event, ttlsensors->door_evttime, ttlsensors->lock_battery, ttlsensors->lock_batttime, ttlsensors->bt_temp, ttlsensors->bt_humi, ttlsensors->bt_batt, ttlsensors->flora_temp_a, ttlsensors->flora_temp_b, ttlsensors->flora_mois_a, ttlsensors->flora_mois_b, ttlsensors->flora_lumi_a, ttlsensors->flora_lumi_b,ttlsensors->flora_soil_a, ttlsensors->flora_soil_b};
+
+    sensors:
+      - name: "Door Status"
+      - name: "Lock Event"
+      - name: "Lock Event: KeyID"
+      - name: "Lock Event: Time"
+      - name: "Door Event"
+      - name: "Door Event: Time"
+      - name: "Lock Battery"
+      - name: "Lock Battery: Time"
+      - name: "BT Temp"
+        unit_of_measurement: °C
+        accuracy_decimals: 1
+      - name: "BT Humi"
+        unit_of_measurement: '%'
+        accuracy_decimals: 1
+      - name: "BT Batt"
+      - name: "Flora Temp A"
+        unit_of_measurement: °C
+        accuracy_decimals: 1
+      - name: "Flora Temp B"
+        unit_of_measurement: °C
+        accuracy_decimals: 1
+      - name: "Flora Mois A"
+      - name: "Flora Mois B"
+      - name: "Flora iLumin A"
+      - name: "Flora iLumin B"
+      - name: "Flora Soil A"
+      - name: "Flora Soil B"
