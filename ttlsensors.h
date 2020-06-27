@@ -111,7 +111,7 @@ String revstr(String rawstr) {
         }
     }
     else ESP_LOGD("TTLSensor", "Unknown pdid");
-    ESP_LOGD("TTLSensor", topic.c_str());
+    //ESP_LOGD("TTLSensor", topic.c_str());
     }
     } //end of while (available())
   } // end of loop()
